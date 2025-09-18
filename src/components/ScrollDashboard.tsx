@@ -124,9 +124,23 @@ export default function ScrollDashboard() {
   return (
     <div ref={containerRef} className="relative">
       {/* Parallax Background */}
-      <div className="dashboard-parallax fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-950 via-blue-900/20 to-slate-900/40" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent" />
+      <div className="dashboard-parallax fixed inset-0 -z-10 overflow-hidden">
+        {/* Dashboard Background */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.9)), url('https://images.pexels.com/photos/2116475/pexels-photo-2116475.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop')`
+          }}
+        />
+        
+        {/* Evidence Section Background */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-0"
+          style={{
+            backgroundImage: `linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.85)), url('https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop')`,
+            transform: 'translateY(100vh)'
+          }}
+        />
       </div>
 
       {/* Section 1: Dashboard */}
@@ -141,15 +155,15 @@ export default function ScrollDashboard() {
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-12"
+            className="text-center mb-12 relative z-10"
           >
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 drop-shadow-2xl">
               Traffic Control
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">
                 Dashboard
               </span>
             </h1>
-            <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-slate-200 max-w-3xl mx-auto drop-shadow-lg">
               Real-time monitoring and analysis of traffic violations with advanced AI detection
             </p>
           </motion.div>
@@ -198,15 +212,15 @@ export default function ScrollDashboard() {
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="evidence-header text-center mb-12"
+            className="evidence-header text-center mb-12 relative z-10"
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 drop-shadow-2xl">
               Evidence
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
                 Gallery
               </span>
             </h2>
-            <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-slate-200 max-w-3xl mx-auto drop-shadow-lg">
               Comprehensive collection of violation evidence with advanced search and filtering
             </p>
           </motion.div>
@@ -214,6 +228,30 @@ export default function ScrollDashboard() {
           {/* Evidence Gallery */}
           <div className="evidence-item">
             <EvidenceGallery />
+          </div>
+          
+          {/* Floating Animation Elements */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            {[...Array(15)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-purple-400/30 rounded-full"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                }}
+                animate={{
+                  y: [0, -40, 0],
+                  opacity: [0.3, 0.9, 0.3],
+                  scale: [0.8, 1.5, 0.8],
+                }}
+                transition={{
+                  duration: 5 + Math.random() * 2,
+                  repeat: Infinity,
+                  delay: Math.random() * 4,
+                }}
+              />
+            ))}
           </div>
         </div>
       </motion.section>

@@ -154,7 +154,7 @@ export default function VideoUploader({ onUploadComplete, isProcessing }: VideoU
         <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
           Upload Traffic Video
         </h2>
-        <p className="text-slate-300 text-sm md:text-base">
+        <p className="text-slate-200 text-sm md:text-base drop-shadow-sm">
           Upload your traffic footage and let our AI analyze it for violations
         </p>
       </div>
@@ -164,8 +164,8 @@ export default function VideoUploader({ onUploadComplete, isProcessing }: VideoU
         <motion.div
           className={`relative border-2 border-dashed rounded-2xl p-8 text-center transition-all ${
             isDragOver 
-              ? 'border-blue-400 bg-blue-400/10' 
-              : 'border-slate-600 hover:border-slate-500'
+              ? 'border-blue-400 bg-blue-400/20 backdrop-blur-md' 
+              : 'border-slate-500 hover:border-slate-400 bg-slate-900/50 backdrop-blur-sm'
           }`}
           onDragEnter={handleDragIn}
           onDragLeave={handleDragOut}
@@ -258,9 +258,24 @@ export default function VideoUploader({ onUploadComplete, isProcessing }: VideoU
           </h3>
           
           {[
-            { name: 'Highway Traffic', duration: '2:34', violations: 3 },
-            { name: 'City Intersection', duration: '1:45', violations: 1 },
-            { name: 'School Zone', duration: '3:12', violations: 5 },
+            { 
+              name: 'Highway Traffic', 
+              duration: '2:34', 
+              violations: 3,
+              thumbnail: 'https://images.pexels.com/photos/544542/pexels-photo-544542.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop'
+            },
+            { 
+              name: 'City Intersection', 
+              duration: '1:45', 
+              violations: 1,
+              thumbnail: 'https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop'
+            },
+            { 
+              name: 'School Zone', 
+              duration: '3:12', 
+              violations: 5,
+              thumbnail: 'https://images.pexels.com/photos/2116475/pexels-photo-2116475.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop'
+            },
           ].map((sample, index) => (
             <motion.button
               key={sample.name}
@@ -268,21 +283,28 @@ export default function VideoUploader({ onUploadComplete, isProcessing }: VideoU
                 toast.success(`Processing ${sample.name}...`);
                 setTimeout(onUploadComplete, 1000);
               }}
-              className="w-full bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg p-4 text-left hover:border-blue-500/30 transition-all group"
+              className="w-full bg-slate-900/60 backdrop-blur-md border border-slate-600/50 rounded-lg p-4 text-left hover:border-blue-400/50 transition-all group shadow-lg"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1 }}
               whileHover={{ scale: 1.02, x: 10 }}
             >
               <div className="flex items-center space-x-3">
-                <FileVideo className="w-8 h-8 text-blue-400 group-hover:text-blue-300 transition-colors" />
+                <div className="relative">
+                  <img 
+                    src={sample.thumbnail} 
+                    alt={sample.name}
+                    className="w-12 h-8 object-cover rounded border border-slate-600"
+                  />
+                  <FileVideo className="absolute inset-0 w-4 h-4 m-auto text-white/80" />
+                </div>
                 <div className="flex-1">
                   <h4 className="text-white font-medium">{sample.name}</h4>
-                  <p className="text-slate-400 text-sm">
+                  <p className="text-slate-300 text-sm">
                     {sample.duration} • {sample.violations} violations detected
                   </p>
                 </div>
-                <Camera className="w-5 h-5 text-slate-400 group-hover:text-blue-400 transition-colors" />
+                <Camera className="w-5 h-5 text-slate-300 group-hover:text-blue-400 transition-colors" />
               </div>
             </motion.button>
           ))}
