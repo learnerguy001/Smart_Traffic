@@ -3,10 +3,10 @@ import { motion } from 'framer-motion';
 import { Play, Zap, Shield, Camera, BarChart3, CheckCircle } from 'lucide-react';
 
 interface HeroProps {
-  onStartDemo: () => void;
+  onStartDemo?: () => void;
 }
 
-export default function Hero({ onStartDemo }: HeroProps) {
+export default function Hero({ onStartDemo = () => {} }: HeroProps) {
   const features = [
     { icon: Camera, title: 'AI-Powered Detection', description: 'Advanced computer vision for real-time violation detection' },
     { icon: Zap, title: 'Instant Processing', description: 'Process video footage in real-time with 99.9% accuracy' },

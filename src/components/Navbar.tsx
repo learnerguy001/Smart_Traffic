@@ -4,15 +4,13 @@ import { Camera, BarChart3, Image, Home, Shield } from 'lucide-react';
 
 interface NavbarProps {
   currentView: string;
-  onNavigate: (view: 'home' | 'upload' | 'dashboard' | 'evidence') => void;
+  onNavigate: (view: 'home' | 'dashboard') => void;
 }
 
 export default function Navbar({ currentView, onNavigate }: NavbarProps) {
   const navItems = [
     { id: 'home', label: 'Home', icon: Home },
-    { id: 'upload', label: 'Upload', icon: Camera },
     { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
-    { id: 'evidence', label: 'Evidence', icon: Image },
   ];
 
   return (

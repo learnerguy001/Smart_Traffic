@@ -9,10 +9,12 @@ import Dashboard from './components/Dashboard';
 import LiveFeed from './components/LiveFeed';
 import StatsPanel from './components/StatsPanel';
 import EvidenceGallery from './components/EvidenceGallery';
+import ScrollHome from './components/ScrollHome';
+import ScrollDashboard from './components/ScrollDashboard';
 import { ViolationProvider } from './context/ViolationContext';
 
 function App() {
-  const [currentView, setCurrentView] = useState<'home' | 'upload' | 'dashboard' | 'evidence'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'dashboard'>('home');
   const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
@@ -63,10 +65,8 @@ function App() {
   const renderView = () => {
     switch (currentView) {
       case 'home':
-        return <Hero onStartDemo={() => setCurrentView('upload')} />;
-      case 'upload':
         return (
-          <VideoUploader 
+          <ScrollHome 
             onUploadComplete={() => {
               setIsProcessing(true);
               setTimeout(() => {
@@ -78,23 +78,9 @@ function App() {
           />
         );
       case 'dashboard':
-        return (
-          <div className="space-y-8">
-            <StatsPanel />
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2">
-                <Dashboard />
-              </div>
-              <div>
-                <LiveFeed />
-              </div>
-            </div>
-          </div>
-        );
-      case 'evidence':
-        return <EvidenceGallery />;
+        return <ScrollDashboard />;
       default:
-        return <Hero onStartDemo={() => setCurrentView('upload')} />;
+        return <ScrollHome onUploadComplete={() => {}} isProcessing={false} />;
     }
   };
 
